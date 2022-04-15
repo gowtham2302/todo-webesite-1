@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
-/* Base */
+
 :root {
     --primary-color: #333;
     --light-color: #f8f8ff;
@@ -54,7 +54,7 @@ body {
     color: var(--light-color);
 }
 
-/* Header */
+
 .header {
     color: var(--primary-color);
     padding: 1.6rem;
