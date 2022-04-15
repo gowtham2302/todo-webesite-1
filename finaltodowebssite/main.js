@@ -1,27 +1,22 @@
-// Selectors for new category form
 const newCategoryForm = document.querySelector('[data-new-category-form]');
 const newCategoryInput = document.querySelector('[data-new-category-input]');
 
-// Selector for categories container
 const categoriesContainer = document.querySelector('[data-categories]');
 
-// Selector for currently viewing
 const currentlyViewing = document.querySelector('[data-currently-viewing]');
 
-// Selector for new todo form
 const newTodoForm = document.querySelector('[data-new-todo-form]');
 const newTodoSelect = document.querySelector('[data-new-todo-select]');
 const newTodoInput = document.querySelector('[data-new-todo-input]');
 
-// Selector for edit todo form
 const editTodoForm = document.querySelector('[data-edit-todo-form]');
 const editTodoSelect = document.querySelector('[data-edit-todo-select]');
 const editTodoInput = document.querySelector('[data-edit-todo-input]');
 
-// Selector for todos container
+
 const todosContainer = document.querySelector('[data-cards]');
 
-// Local storage keys
+
 const LOCAL_STORAGE_CATEGORIES_KEY = 'LOCAL_STORAGE_CATEGORIES_KEY';
 const LOCAL_STORAGE_TODOS_KEY = 'LOCAL_STORAGE_TODOS_KEY';
 const LOCAL_STORAGE_SELECTED_CATEGORY_ID_KEY = 'LOCAL_STORAGE_SELECTED_CATEGORY_ID_KEY';
@@ -30,7 +25,7 @@ let selectedCategoryId = localStorage.getItem(LOCAL_STORAGE_SELECTED_CATEGORY_ID
 let categories = JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEY)) || [];
 let todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEY)) || [];
 
-// EVENT: Add Category
+
 newCategoryForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -48,7 +43,7 @@ newCategoryForm.addEventListener('submit', (e) => {
     saveAndRender();
 });
 
-// EVENT: Get Selected Category Id
+
 categoriesContainer.addEventListener('click', (e) => {
     if (e.target.tagName.toLowerCase() === 'li') {
         if (!e.target.dataset.categoryId) {
@@ -61,7 +56,7 @@ categoriesContainer.addEventListener('click', (e) => {
     }
 });
 
-// EVENT: Get Selected Category Color
+
 categoriesContainer.addEventListener('change', (e) => {
     if (e.target.tagName.toLowerCase() === 'input') {
         const newCategoryColor = e.target.value;
@@ -74,7 +69,7 @@ categoriesContainer.addEventListener('change', (e) => {
     }
 });
 
-// EVENT: Delete Selected Category
+
 currentlyViewing.addEventListener('click', (e) => {
     if (e.target.tagName.toLowerCase() === 'span') {
         categories = categories.filter((category) => category._id !== selectedCategoryId);
@@ -87,7 +82,7 @@ currentlyViewing.addEventListener('click', (e) => {
     }
 });
 
-// EVENT: Add Todo
+
 newTodoForm.addEventListener('submit', (e) => {
     e.preventDefault();
     todos.push({
@@ -102,7 +97,6 @@ newTodoForm.addEventListener('submit', (e) => {
     saveAndRender();
 });
 
-// EVENT: Load Edit Todo Form With Values
 let todoToEdit = null;
 todosContainer.addEventListener('click', (e) => {
     if (e.target.classList[1] === 'fa-edit') {
@@ -123,7 +117,6 @@ todosContainer.addEventListener('click', (e) => {
     }
 });
 
-// EVENT: Update The Todo Being Edited With New Values
 editTodoForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -139,7 +132,6 @@ editTodoForm.addEventListener('submit', function (e) {
     saveAndRender();
 });
 
-// *==================== Functions ====================
 
 function saveAndRender() {
     save();
@@ -162,7 +154,6 @@ function render() {
     renderFormOptions();
     renderTodos();
 
-    // Set the current viewing category
     if (!selectedCategoryId || selectedCategoryId === 'null') {
         currentlyViewing.innerHTML = `You are currently viewing <strong>All Categories</strong>`;
     } else {
@@ -194,15 +185,15 @@ function renderFormOptions() {
 function renderTodos() {
     let todosToRender = todos;
 
-    // if their is a Selected Category Id, and selected category id !== 'null then filter the todos
+
     if (selectedCategoryId && selectedCategoryId !== 'null') {
         todosToRender = todos.filter((todo) => todo.categoryId === selectedCategoryId);
     }
 
-    // Render Todos
+
     todosToRender.forEach(({ _id, categoryId, todo }) => {
 
-        // Get Complimentary categoryDetails Based On TaskId
+
         const { color, category } = categories.find(({ _id }) => _id === categoryId);
         const backgroundColor = convertHexToRGBA(color, 20);
         todosContainer.innerHTML += `
@@ -219,7 +210,7 @@ function renderTodos() {
     });
 }
 
-// HELPERS
+
 function clearChildElements(element) {
     while (element.firstChild) {
         element.removeChild(element.firstChild);
